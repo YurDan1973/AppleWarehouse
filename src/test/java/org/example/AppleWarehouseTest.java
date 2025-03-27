@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AppleWarehouseTest {
 
-   private AppleWarehouse warehouse = new AppleWarehouse();
+    private AppleWarehouse warehouse = new AppleWarehouse();
 
     @Test
     public void shouldFindGreenApples() {
@@ -52,5 +52,111 @@ class AppleWarehouseTest {
 
     }
 
+    @Test
+    public void shouldFindApplesUsingAnonymousClass() {
+        List<Apple> greenApples = warehouse.findApples(new AppleSearchCriteria() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getColor().equals("green");
+            }
+        });
+        assertEquals(greenApples.size(), 3);
 
+        List<Apple> redApples = warehouse.findApples(new AppleSearchCriteria() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getColor().equals("red");
+            }
+        });
+        assertEquals(redApples.size(), 3);
+
+        List<Apple> applesHeavierThen150 = warehouse.findApples(new AppleSearchCriteria() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getWeight() > 150;
+            }
+        });
+        assertEquals(applesHeavierThen150.size(), 4);
+
+        List<Apple> applesNotHeavierThen150 = warehouse.findApples(new AppleSearchCriteria() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getWeight() <= 150;
+            }
+        });
+        assertEquals(applesNotHeavierThen150.size(), 4);
+    }
+
+    @Test
+    public void shouldFindApplesUsingLambdaExpression() {
+        List<Apple> greenApples = warehouse.findApples(
+                apple -> apple.getColor().equals("green"));
+        assertEquals(greenApples.size(), 3);
+
+        List<Apple> redApples = warehouse.findApples(
+                apple -> apple.getColor().equals("red"));
+        assertEquals(redApples.size(), 3);
+
+        List<Apple> applesHeavierThen150 = warehouse.findApples(
+                apple -> apple.getWeight() > 150);
+        assertEquals(applesHeavierThen150.size(), 4);
+
+        List<Apple> applesNotHeavierThen150 = warehouse.findApples(
+                apple -> apple.getWeight() <= 150);
+        assertEquals(applesNotHeavierThen150.size(), 4);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
